@@ -27,16 +27,15 @@ class SingUpForm(Form):
 	nombre = StringField('nombre', [validators.DataRequired()])
 	correo = StringField('correo', [validators.DataRequired()])
 	institucion = StringField('institucion', [validators.DataRequired()])
-	password = PasswordField('password', [validators.DataRequired])
-	password2 = PasswordField(
-        'Repetir contraseña', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Registrarse')
-
+	password = PasswordField('password', [
+		validators.DataRequired(),
+		validators.EqualTo('confirmar', message='Las contraseñas no coinciden')
+	])
+	confirmar = PasswordField('Confirmar contraseña')
 
 class ListaForm(Form):
 	materia = StringField('Materia', [validators.DataRequired])
 	
-
 class Llenartarea(Form):
 	tarea = StringField('', [validators.DataRequired])
 	fecha = StringField('', [validators.DataRequired])
