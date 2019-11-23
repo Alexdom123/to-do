@@ -6,8 +6,8 @@ from wtforms import validators
 from wtforms import PasswordField
 
 def length_honeypot(form, field):
-	if  len(fiel.data) > 0:
-		raise validators.validationError('El campo debe estar vacio.')
+	if  len(field.data) > 0:
+		raise validators.ValidationError('El campo debe estar vacio.')
 
 class CommentForm(Form):
 	"""docstring for ClassName"""
