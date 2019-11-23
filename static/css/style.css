@@ -1,5 +1,5 @@
 body{
-    background-color: whitesmoke;
+    background-color:  #e5e7e9 ;
     margin: 0;
     padding: 0;
 }
@@ -13,7 +13,11 @@ body{
     font-family: 'Quicksand', sans-serif;
 }
 #general{
-    height: 300px;
+   padding: 40px; 
+   box-shadow: black;
+   background-color: white;
+   margin: 18px;
+   
 }
 
 #pie{
@@ -24,6 +28,11 @@ body{
 }
 #listaPie{    
     color: white;
+
+}
+#listaPie li{
+    display: inline;
+    margin-inline: 50px;
 }
 #aside{
    
@@ -33,6 +42,8 @@ body{
     color: black;
     padding: 10px;
     border-radius: 7px;
+    font-family: Tahoma;
+    font-weight: normal;
 
 }
 a #boton_portada :hover{
