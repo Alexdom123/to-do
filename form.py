@@ -22,6 +22,11 @@ class LoginForm(Form):
 	usuario = StringField('Usuario', [validators.DataRequired])
 	contraseña = PasswordField('Contraseña', [validators.DataRequired])
 
+class SingUpForm(Form):
+	nombre = StringField('nombre', [validators.DataRequired()])
+	correo = StringField('correo', [validators.DataRequired()])
+	institucion = StringField('institucion', [validators.DataRequired()])
+	password = PasswordField('password', [validators.DataRequired])
 class ListaForm(Form):
 	materia = StringField('Materia', [validators.DataRequired])
 	
