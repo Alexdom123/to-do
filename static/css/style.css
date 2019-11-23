@@ -50,3 +50,6 @@ a #boton_portada :hover{
     background-color: darkslateblue;
 
 }
+#datetime{
+    width: 50%;
+}

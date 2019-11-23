@@ -5,6 +5,10 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet"> 
+
+	<link rel="stylesheet" type="text/css" href="/static/js/jquery.datetimepicker.css">
+	<script src="/static/js/jquery.js"></script>
+	<script src="/static/build/jquery.datetimepicker.full.min.js"></script>
 	<title>Nueva Lista</title>
 </head>
 <body>
@@ -49,12 +53,21 @@
 		<div id="general" class="col-8">
 			{% from "_macro.html" import render_field %}
 			<form>
-			
-			
 			<h3>Paso 1. Agrega tus tareas a la lista</h3>
             {{ render_field(form.tarea, class="form-control", placeholder="Ingresa el nombre de tu tarea", id="form") }}
-            {{ render_field(form.fecha, class="form-control", placeholder="Ingresa la fecha limite", id="form") }}		
-		
+			<br>
+			<span>Selecciona la fecha límite de tu tarea</span>
+			<br>	
+			<input id="datetimepicker" type="text" >
+
+			<script type="text/javascript">
+				jQuery.datetimepicker.setLocale('es');
+				jQuery('#datetimepicker').datetimepicker({
+					autoclose: true,
+					timepicker:false,
+					format:'d/m/Y'
+				});
+				</script>
 		</form>
 		</div>
 		<div id="aside" class="col-4">
