@@ -28,6 +28,10 @@ class SingUpForm(Form):
 	correo = StringField('correo', [validators.DataRequired()])
 	institucion = StringField('institucion', [validators.DataRequired()])
 	password = PasswordField('password', [validators.DataRequired])
+	password2 = PasswordField(
+        'Repetir contraseña', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Registrarse')
+
 
 class ListaForm(Form):
 	materia = StringField('Materia', [validators.DataRequired])
