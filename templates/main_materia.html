@@ -13,7 +13,7 @@
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				  <span class="navbar-toggler-icon"></span>
 				</button>
-			  
+				
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				  <ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
@@ -26,8 +26,6 @@
 					  <a class="nav-link" href="#">Mi Dashboard</a>
 					</li>
 				  </ul>
-				  <form class="form-inline my-2 my-lg-0">
-				  </form>
 				</div>
 		</nav>
 	<div class="container-fluid">
@@ -47,12 +45,10 @@
 	</div>
 	<div class="row">
 		<div id="general" class="col-8">
-			{% from "_macro.html" import render_field %}
-			<form>
 			
-			
+			<form action="{{url_for('addmateria')}}" method="POST">
 			<h3>Paso 1. Registra tus materias</h3>
-			{{ render_field(form.materia, class="form-control", placeholder="Ingresa tu materia", id="form") }}	
+			<input type="text" class="form-control" name="materia" placeholder="Ingresa tu materia">
 			<br>
 			<button class="btn btn-info">Guardar</button>
 		</form>
