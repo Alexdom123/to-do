@@ -1,5 +1,6 @@
 from flask import Flask,render_template, request, make_response, session, url_for, redirect, flash
 from flask_mysqldb import MySQL
+from passlib.hash import sha256_crypt #librería para encriptacion de datos
 import form
 
 app = Flask(__name__)
