@@ -17,7 +17,6 @@
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				  <span class="navbar-toggler-icon"></span>
 				</button>
-			  
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				  <ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
@@ -51,15 +50,26 @@
 	</div>
 	<div class="row">
 		<div id="general" class="col-8">
-			{% from "_macro.html" import render_field %}
 			<form>
-			<h3>Paso 1. Agrega tus tareas a la lista</h3>
-            {{ render_field(form.tarea, class="form-control", placeholder="Ingresa el nombre de tu tarea", id="form") }}
+			<h3>Paso 2. Agrega tus tareas a tu lista</h3>
 			<br>
-			<span>Selecciona la fecha límite de tu tarea</span>
+			<input type="text" class="form-control" name="titulo" placeholder="Titulo">
+			<br>
+			<input type="text" class="form-control" name="descripcion" placeholder="Descripcion">
+			<br>
+			<!--_______________Fechas-->
+			<input id="datetimepicker_" type="text" class="form-control" placeholder="Selecciona la fecha de Inicio">
+			<script type="text/javascript">
+				jQuery.datetimepicker.setLocale('es');
+				jQuery('#datetimepicker_').datetimepicker({
+					autoclose: true,
+					timepicker:false,
+					format:'d/m/Y',
+					todayBtn: true
+				});
+				</script>
 			<br>	
-			<input id="datetimepicker" type="text" >
-
+			<input id="datetimepicker" type="text" class="form-control" placeholder="Selecciona la fecha límite">
 			<script type="text/javascript">
 				jQuery.datetimepicker.setLocale('es');
 				jQuery('#datetimepicker').datetimepicker({
@@ -68,13 +78,13 @@
 					format:'d/m/Y'
 				});
 				</script>
+		<br>
+		<button class="btn btn-info">Guardar</button>
 		</form>
 		</div>
 		<div id="aside" class="col-4">
-			
 		</div>
 	</div>
-	
 			<footer id="pie" class="row">
 					<div class="col">
 						<ul id="listaPie">
@@ -83,9 +93,5 @@
 						</div>
 				</footer>
 			</div>
-	
-
 </body>
 </html>
-
-

@@ -27,9 +27,10 @@ def addmateria():
     mysql.connection.commit()
     return redirect(url_for('main_materia'))
 
-@app.route('/llenartareas')
+@app.route('/main_tarea')
 def llenartareas():
-  form_tareas = form.Llenartarea()
-  return render_template('llenartareas.html', form = form_tareas)
+  return render_template('main_tarea.html')
+'''CELINITA'''
+  
 
 app.run(debug= True, port= 8000)
