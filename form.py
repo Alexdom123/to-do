@@ -39,7 +39,4 @@ class ListaForm(Form):
 class Llenartarea(Form):
 	tarea = StringField('', [validators.DataRequired])
 	fecha = StringField('', [validators.DataRequired])
-
-
-#mi pito huele a maruchan
 		
