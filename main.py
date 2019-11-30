@@ -64,7 +64,7 @@ def registro():
       return redirect(url_for('main_entrar'))
   elif request.method == 'POST': #Si el formulario esta vacio
     flash ('Por favor introduce todos los datos')
-  return render_template('main_registro.html', mensaje=mensaje)
+  return render_template('main_registro.html')
 
 @app.route('/main_tarea')
 def llenartareas():
