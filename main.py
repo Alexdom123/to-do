@@ -4,7 +4,7 @@ import form
 import bcrypt #librería para encriptacion de datos
 
 app = Flask(__name__)
-
+app.secret_key = 'eres secreto de amor'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
@@ -38,7 +38,6 @@ def main_registro():
 
 @app.route('/addregistro', methods=['POST'])
 def registro():
-  mensaje = '' #para escribir dentro si algo malo sucede
   if request.method == 'POST' and 'nombre' in request.form and 'password' in request.form and 'correo' in request.form and 'institucion' in request.form:
     nombre = request.form['nombre']
     password = request.form['password'].encode('UTF-8')
@@ -51,20 +50,20 @@ def registro():
     account = cur.fetchone()
     # Si la cuenta existe muestra un mensaje de errir
     if account:
-      mensaje = 'La cuenta ya existe!'
+      flash ('La cuenta ya existe!')
     elif not nombre or not password or not correo or not institucion:
-      mensaje = 'Por favor, llena el formulario!'
+      flash ('Por favor, llena el formulario!')
     else:
       # La cuenta no existe y la informacion del formulario es valida, se inserta el usuario en la bd
       cur.execute("INSERT INTO usuarios(nombre, correo, institucion, password) VALUES(%s, %s, %s, %s)", (nombre, correo, institucion, encriptada,))
       mysql.connection.commit()
       #cerramos la conexión a la bd
       mysql.connection.close()
-      print("success")
-      mensaje = 'You have successfully registered!'
-      return redirect(url_for('main_registro', mensaje=mensaje))
+      print("S U C C E S S")
+      flash ('You have successfully registered!')
+      return redirect(url_for('main_entrar'))
   elif request.method == 'POST': #Si el formulario esta vacio
-    mensaje = 'Por favor introduce todos los datos'
+    flash ('Por favor introduce todos los datos')
   return render_template('main_registro.html', mensaje=mensaje)
 
 @app.route('/main_tarea')

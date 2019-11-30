@@ -35,11 +35,16 @@
     <div class="container">
         <div id="wrapper">
                 <form class="box" action="../validacion.php" method="post" onsubmit="return ValidaFormulario()">
+               {% with messages = get_flashed_messages() %}
+                    {% for message in messages %}
+                        <h3>{{ message }}</h3>
+                    {% endfor %}
+               {% endwith %}
                <h1 id="letraLogin">Login</h1>
                <input id="txtusuario" type="text" name="txtusuario" placeholder="Usuario">
                <input id="txtpassword" type="password" name="txtpassword" placeholder="Contraseña">
                <input type="submit" name="" value="Login">
-               <a href="main_registro.html">Registrate Aquí</a>
+               <a href="main_registro">Registrate Aquí</a>
              </form>       
         </div>
     </div>         
