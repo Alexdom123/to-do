@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <script language="javascript">
+                    function ValidaFormulario()
+                    {
+                       //Recuperamos lo escrito en la caja del usuario:
+                       var valorUsuario = document.getElementById("txtusuario").value;
+                       
+                       //Recuperamos lo escrito en la caja del password:
+                       var valorClave = document.getElementById("txtpassword").value;
+              
+                       //VALIDACIONES *****************************************************************
+                       //Caja de Texto ****************************************************************
+                       if(valorUsuario == null || valorUsuario.length == 0 || /^\s+$/.test(valorUsuario)) 
+                       {
+                           alert("Debes escribir el usuario");
+                           document.getElementById("txtusuario").focus();
+                           return false;
+                       } else if (valorClave == null || valorClave.length == 0 || /^\s+$/.test(valorClave)){
+                           alert("Debes escribir la contraseña");
+                           document.getElementById("txtpassword").focus();
+                           return false;  
+                       } //Cuando ya están contestadas todas las cajas de texto y seleccionados los combobox enviamos el form
+                           return true; 
+                       }
+              </script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleReg.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet"> 
+        <title>Entra</title>
+</head>
+<body id="bodyReg">
+    <div class="container">
+        <div id="wrapper">
+                <form class="box" action="../validacion.php" method="post" onsubmit="return ValidaFormulario()">
+               <h1 id="letraLogin">Login</h1>
+               <input id="txtusuario" type="text" name="txtusuario" placeholder="Usuario">
+               <input id="txtpassword" type="password" name="txtpassword" placeholder="Contraseña">
+               <input type="submit" name="" value="Login">
+               <a href="main_registro.html">Registrate Aquí</a>
+             </form>       
+        </div>
+    </div>         
+</body>
+</html>
