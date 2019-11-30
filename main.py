@@ -1,6 +1,5 @@
 from flask import Flask,render_template, request, make_response, session, url_for, redirect, flash
 from flask_mysqldb import MySQL
-from passlib.hash import sha256_crypt #librería para encriptacion de datos
 import form
 
 app = Flask(__name__)
@@ -31,7 +30,9 @@ def addmateria():
 @app.route('/main_tarea')
 def llenartareas():
   return render_template('main_tarea.html')
-'''CELINITA'''
+
+"""@app.route('addtarea')
+def addtarea():"""
   
 
 app.run(debug= True, port= 8000)
