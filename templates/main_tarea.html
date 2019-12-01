@@ -50,7 +50,7 @@
 	</div>
 	<div class="row">
 		<div id="general" class="col-8">
-			<form>
+			<form action="{{url_for('addtarea')}}" method="POST">
 			<h3>Paso 2. Agrega tus tareas a tu lista</h3>
 			<br>
 			<input type="text" class="form-control" name="titulo" placeholder="Titulo">
@@ -58,7 +58,7 @@
 			<input type="text" class="form-control" name="descripcion" placeholder="Descripcion">
 			<br>
 			<!--_______________Fechas-->
-			<input id="datetimepicker_" type="text" class="form-control" placeholder="Selecciona la fecha de Inicio">
+			<input name="creada" id="datetimepicker_" type="text" class="form-control" placeholder="Selecciona la fecha de Inicio">
 			<script type="text/javascript">
 				jQuery.datetimepicker.setLocale('es');
 				jQuery('#datetimepicker_').datetimepicker({
@@ -69,7 +69,7 @@
 				});
 				</script>
 			<br>	
-			<input id="datetimepicker" type="text" class="form-control" placeholder="Selecciona la fecha límite">
+			<input name="entrega" id="datetimepicker" type="text" class="form-control" placeholder="Selecciona la fecha límite">
 			<script type="text/javascript">
 				jQuery.datetimepicker.setLocale('es');
 				jQuery('#datetimepicker').datetimepicker({
@@ -79,6 +79,15 @@
 				});
 				</script>
 		<br>
+				<select name="materia" id="combo_materia">
+					{% for materia in materias %}
+					<option value="{{ materia.1 }}"> {{ materia.1 }}</option>
+					<br>
+					{% endfor %}
+				</select>
+				<br>
+				<input type="text" value="3" name="idColor" class="form-control">
+				<br>
 		<button class="btn btn-info">Guardar</button>
 		</form>
 		</div>
