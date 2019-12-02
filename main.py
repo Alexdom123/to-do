@@ -1,7 +1,9 @@
 from flask import Flask,render_template, request, make_response, session, url_for, redirect, flash
 from flask_mysqldb import MySQL
+import MySQLdb.cursors
 import form
 import bcrypt #librería para encriptacion de datos
+import re #alchile no sé pa k es
 
 app = Flask(__name__)
 app.secret_key = 'eres secreto de amor'
@@ -13,11 +15,41 @@ mysql = MySQL(app)
 
 @app.route('/')
 def index():
-  return render_template('index.html')
-
-@app.route('/entrar')
-def main_entrar():
   return render_template('main_entrar.html')
+
+@app.route('/home')
+def home():
+  # Revisa si el usuario está logueado
+  if 'loggedin' in session:
+    # El usuario esta logueado y le mostramos el home
+    return render_template('index.html', username=session['username'])
+  #El usuario no esta logueado, lo redireccionamos al inicio de sesion
+  return redirect(url_for('/'))
+
+@app.route('/', methods=['POST'])
+def login():
+  username = request.form['txtusuario']
+  password = request.form['txtpassword']
+  cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+  cur.execute("SELECT * FROM usuarios WHERE nombre='" + username + "' and password='" + password + "'")
+  account = cur.fetchone()
+  if account:
+    session['loggedin'] = True
+    session['id'] = account['id']
+    session['username'] = account['nombre']
+    return redirect(url_for('home'))
+  else:
+    flash ('Usuario o Password incorrectos!')
+    return redirect(url_for('/'))
+
+@app.route('/logout')
+def logout():
+  # Elimina la informacion de la sesion, esto sacara al usuario
+  session.pop('loggedin', None)
+  session.pop('id', None)
+  session.pop('username', None)
+  # Redireccionamos a la pagina del login
+  return redirect(url_for('login'))
 
 @app.route('/main_materia')
 def main_materia():

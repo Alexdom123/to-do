@@ -34,7 +34,7 @@
 <body id="bodyReg">
     <div class="container">
         <div id="wrapper">
-                <form class="box" action="../validacion.php" method="post" onsubmit="return ValidaFormulario()">
+                <form class="box" action="{{url_for('login')}}" method="POST" onsubmit="return ValidaFormulario()">
                {% with messages = get_flashed_messages() %}
                     {% for message in messages %}
                         <h3>{{ message }}</h3>
