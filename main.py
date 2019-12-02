@@ -29,18 +29,23 @@ def home():
 @app.route('/', methods=['POST'])
 def login():
   username = request.form['txtusuario']
-  password = request.form['txtpassword']
+  passwordPlano = request.form['txtpassword']
   cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-  cur.execute("SELECT * FROM usuarios WHERE nombre='" + username + "' and password='" + password + "'")
-  account = cur.fetchone()
-  if account:
-    session['loggedin'] = True
-    session['id'] = account['id']
-    session['username'] = account['nombre']
-    return redirect(url_for('home'))
-  else:
-    flash ('Usuario o Password incorrectos!')
-    return redirect(url_for('/'))
+  cur.execute("SELECT * FROM usuarios WHERE nombre='" + username + "'")
+  if cur is not None:
+    account = cur.fetchone()
+    password = account['password']
+    # Comparamos la password con la password hasheada
+    if bcrypt.checkpw(passwordPlano.encode('utf-8'), password.encode('utf-8')):
+      # si la contraseña plana es igual a la encriptada...
+      if account:
+        session['loggedin'] = True
+        session['id'] = account['id']
+        session['username'] = account['nombre']
+        return redirect(url_for('home'))
+      else:
+        flash ('Usuario o Password incorrectos!')
+        return redirect(url_for('/'))
 
 @app.route('/logout')
 def logout():
@@ -96,7 +101,7 @@ def registro():
       mysql.connection.close()
       print("S U C C E S S")
       flash ('You have successfully registered!')
-      return redirect(url_for('main_entrar'))
+      return redirect(url_for('login'))
   elif request.method == 'POST': #Si el formulario esta vacio
     flash ('Por favor introduce todos los datos')
   return render_template('main_registro.html')
