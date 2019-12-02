@@ -5,11 +5,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet"> 
-
-	<link rel="stylesheet" type="text/css" href="/static/js/jquery.datetimepicker.css">
-	<script src="/static/js/jquery.js"></script>
-	<script src="/static/build/jquery.datetimepicker.full.min.js"></script>
-	<title>Nueva Lista</title>
+	<title>Mis materias</title>
 </head>
 <body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -17,23 +13,24 @@
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				  <span class="navbar-toggler-icon"></span>
 				</button>
+				
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				  <ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
 					  <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
-					  <a class="nav-link" href="#">Historial</a>
-					</li>
-					<li class="nav-item">
 					  <a class="nav-link" href="#">Mi Dashboard</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Mis materias</a>
+					  </li>
+					  <li class="nav-item">
+							<a class="nav-link" href="#">Mis tareas</a>
+						  </li>
 				  </ul>
-				  <form class="form-inline my-2 my-lg-0">
-				  </form>
 				</div>
 		</nav>
-		
 	<div class="container-fluid">
 	<div class="jumbotron">
 			<br>
@@ -47,49 +44,61 @@
 			<br>
 			<br>
 			<br>
-		<h1>Organiza tus tareas sin dificultades</h1>
+		<h1>Edita y elimina tus materias</h1>
 	</div>
+	<div id="general" class="col-12">
 	<div class="row">
-		<div id="general" class="col-8">
-			<form action="{{url_for('addtarea')}}" method="POST">
-			<h3>Paso 2. Agrega tus tareas a tu lista</h3>
-			<br>
-			<input type="text" class="form-control" name="titulo" placeholder="Titulo">
-			<br>
-			<input type="text" class="form-control" name="descripcion" placeholder="Descripcion">
-			<br>
-			<!--_______________Fechas-->
-			Selecciona la fecha de inicio
-			<br>
-			<input name="creada" type="date" placeholder="Selecciona la fecha de inicio">
-			<br>	
-			<br>
-			Selecciona la fecha límite
-			<br>
-			<input name="entrega" type="date" placeholder="Selecciona la fecha límite">
-			<br>
-		<br>
-				<select name="materia" id="combo_materia">
-					{% for materia in materias %}
-					<option value="{{ materia.0 }}"> {{ materia.1 }}</option>
-					<br>
-					{% endfor %}
-				</select>
-				<br>
-				<br>
-		<button class="btn btn-info">Guardar</button>
-		</form>
+		<div id="general" class="col-10">
+                
+        <table class="table table-hover table-bordered table-sm bg-white">
+
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Descripcion</th>
+                    <th>Creada</th>
+                    <th>Entrega</th>
+                    <th>Materia</th>
+                </tr>
+            </thead>
+            <tbody> 
+                    {% for tarea in tareas %}
+                <tr>
+                        
+                            <td><p>{{ tarea.1 }}</p></td>
+                            <td><p>{{ tarea.2 }}</p></td>
+                            <td><p>{{ tarea.3 }}</p></td>
+                            <td><p>{{ tarea.4 }}</p></td>
+                            <td><p>{{ tarea.5 }}</p></td>
+                            
+                            
+                            <td>
+                                    <a href="/edit_tarea/{{tarea.0}}">Editar</a>
+                                    <a href="/delete_tarea/{{tarea.0}}">Eliminar</a>
+                                </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+		<a href="main_tarea">Registrar otra tarea</a>
+		
 		</div>
-		<div id="aside" class="col-4">
+		<div id="aside" class="col-2">
+			
 		</div>
-	</div>
+    </div>
+    </div>
+        <div>
 			<footer id="pie" class="row">
 					<div class="col">
 						<ul id="listaPie">
-                            <li>Alxdom</li> Mussgoking</li>
-                        </ul>
+							<li>Alxdom</li> Mussgoking</li>
+					</ul>
 						</div>
 				</footer>
 			</div>
+	
+
 </body>
 </html>

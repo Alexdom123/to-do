@@ -28,8 +28,9 @@ def addmateria():
   if request.method == 'POST':
     materia = request.form['materia']
     cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO materias (materia) VALUES (%s)", (materia,))
+    cur.execute("INSERT INTO materias (materia) VALUES (%s)", [materia])
     mysql.connection.commit()
+    flash('Materia agregada correctamente')
     return redirect(url_for('main_materia'))  
 
 @app.route('/main_registro')
@@ -79,6 +80,7 @@ def deleteM(id):
   cur = mysql.connection.cursor()
   cur.execute("DELETE FROM materias where idMateria = {0}".format(id))
   mysql.connection.commit()
+  
   return redirect(url_for('mis_materias'))
 
 @app.route('/edit_materia/<id>', methods = ['POST', 'GET'])
@@ -97,6 +99,7 @@ def actualizar_materia(id):
     cur = mysql.connection.cursor()
     cur.execute("UPDATE materias SET materia = %s WHERE idMateria = %s", (materia, id))
     mysql.connection.commit()
+    
   return redirect(url_for('mis_materias'))
 
 @app.route('/main_tarea')
@@ -114,13 +117,18 @@ def addtarea():
     descripcion = request.form['descripcion']
     creada = request.form['creada']
     entrega = request.form['entrega']
-    materia = request.form['materia']
-    idColor = request.form['idColor']
+    idmateria = request.form['materia']
     cur = mysql.connection.cursor()
-    cur2 = mysql.connection.cursor()
-    cur.execute("INSERT INTO tareas (titulo, descripcion, creada, entrega, idColor) VALUES (%s, %s, %s, %s, %s)", (materia,descripcion,creada,entrega, idColor))
-    cur2.execute("INSERT INTO materias (materia) VALUES (%s)", (materia))
+    cur.execute("INSERT INTO tareas (titulo, descripcion, creada, entrega, idMateria) VALUES (%s, %s, %s, %s,%s)", (titulo, descripcion, creada, entrega, idmateria))
     mysql.connection.commit()
     return redirect(url_for('main_tarea'))  
+
+@app.route('/mis_tareas')
+def mis_tareas():
+  cur = mysql.connection.cursor()
+  cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria")
+  data = cur.fetchall()
+  cur.close()
+  return render_template('mis_tareas.html', tareas = data)
 
 app.run(debug= True, port= 8000)
