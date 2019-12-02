@@ -9,7 +9,7 @@
 </head>
 <body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand" href="#">TO-DO</a>
+				<a class="navbar-brand" href="home">TO-DO</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				  <span class="navbar-toggler-icon"></span>
 				</button>
@@ -17,18 +17,27 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				  <ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-					  <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+					  <a class="nav-link" href="home">Inicio <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
 					  <a class="nav-link" href="#">Mi Dashboard</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Mis materias</a>
+						<a class="nav-link" href="mis_materias">Mis materias</a>
 					  </li>
 					  <li class="nav-item">
 							<a class="nav-link" href="#">Mis tareas</a>
 						  </li>
 				  </ul>
+				  <div class="mx-auto order-0">
+						<a>Bienvenido, {{ username }}!</a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+					</div>
+				  <ul class="navbar-nav ml-auto">
+								<a class="nav-link" href="logout">Cerrar Sesión</a>
+				   </ul>
 				</div>
 		</nav>
 	<div class="container-fluid">
@@ -45,6 +54,11 @@
 			<br>
 			<br>
 		<h1>Registra tus materias</h1>
+		{% with messages = get_flashed_messages() %}
+                    {% for message in messages %}
+                        <h3>{{ message }}</h3>
+                    {% endfor %}
+               {% endwith %}
 	</div>
 	<div class="row">
 		<div id="general" class="col-4">
@@ -52,20 +66,20 @@
 			<input type="text" class="form-control" name="materia" placeholder="Ingresa tu materia">
 			<br>
 			<button class="btn btn-info">Guardar</button>
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 			<a href="/main_tarea">Registrar tareas</a>
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 			<a href="mis_materias">Ir a mis materias</a>
 		</form>
 		</div>
 		<div class="col-8">
 		</div>
 	</div>
-			<footer id="pie" class="row">
-					<div class="col">
-						<ul id="listaPie">
-							<li>Alxdom</li> <li>Mussgoking</li>
-						</ul>
-					</div>
-			</footer>
+	<footer>
+			<div class="container">
+				<h5>Alxdom® & MussgoKing® 2019</h5>
+			</div>
+		</footer>
 	</div>
 </body>
 </html>

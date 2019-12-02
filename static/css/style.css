@@ -20,9 +20,6 @@ body{
    
 }
 
-#pie{
-    background-color:black;
-}
 #form{
     width: 300px;
 }
@@ -52,4 +49,12 @@ a #boton_portada :hover{
 }
 #datetime{
     width: 50%;
+}
+#h1Titulo{
+    color:coral;
+}
+footer{
+    text-align: center;
+    color: slategray;
+    padding: 10px;
 }

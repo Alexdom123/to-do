@@ -1,7 +1,9 @@
 from flask import Flask,render_template, request, make_response, session, url_for, redirect, flash
 from flask_mysqldb import MySQL
+import MySQLdb.cursors
 import form
 import bcrypt #librería para encriptacion de datos
+import re #alchile no sé pa k es
 
 app = Flask(__name__)
 app.secret_key = 'eres secreto de amor'
@@ -13,18 +15,54 @@ mysql = MySQL(app)
 
 @app.route('/')
 def index():
-  return render_template('index.html')
-
-@app.route('/entrar')
-def main_entrar():
   return render_template('main_entrar.html')
+
+@app.route('/home')
+def home():
+  # Revisa si el usuario está logueado
+  if 'loggedin' in session:
+    # El usuario esta logueado y le mostramos el home
+    return render_template('index.html', username=session['username'])
+  #El usuario no esta logueado, redireccionamos al inicio de sesion
+  return redirect(url_for('/'))
+
+@app.route('/', methods=['POST'])
+def login():
+  username = request.form['txtusuario']
+  passwordPlano = request.form['txtpassword']
+  cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+  cur.execute("SELECT * FROM usuarios WHERE nombre='" + username + "'")
+  if cur is not None:
+    account = cur.fetchone()
+    password = account['password']
+    # Comparamos la password con la password hasheada
+    if bcrypt.checkpw(passwordPlano.encode('utf-8'), password.encode('utf-8')):
+      # si la contraseña plana es igual a la encriptada...
+      if account:
+        session['loggedin'] = True
+        session['id'] = account['id']
+        session['username'] = account['nombre']
+        return redirect(url_for('home'))
+      else:
+        flash ('Usuario o Password incorrectos!')
+        return redirect(url_for('/'))
+
+@app.route('/logout')
+def logout():
+  # Elimina la informacion de la sesion, esto sacara al usuario
+  session.pop('loggedin', None)
+  session.pop('id', None)
+  session.pop('username', None)
+  # Redireccionamos a la pagina del login
+  return redirect(url_for('login'))
 
 @app.route('/main_materia')
 def main_materia():
-  return render_template('main_materia.html')
+  return render_template('main_materia.html', username=session['username'])
 
 @app.route('/addmateria',methods=['POST'])
 def addmateria():
+<<<<<<< HEAD
   if request.method == 'POST':
     materia = request.form['materia']
     cur = mysql.connection.cursor()
@@ -32,6 +70,17 @@ def addmateria():
     mysql.connection.commit()
     flash('Materia agregada correctamente')
     return redirect(url_for('main_materia'))  
+=======
+  if 'loggedin' in session:
+    if request.method == 'POST':
+      materia = request.form['materia']
+      usuario = session['id']
+      cur = mysql.connection.cursor()
+      cur.execute("INSERT INTO materias (materia, id) VALUES (%s, %s)", (materia, usuario))
+      mysql.connection.commit()
+      flash ('Materia registrada correctamente!')
+      return redirect(url_for('main_materia'))  
+>>>>>>> 6f5f2457bad20b673ffae2f916a4be521542aac6
 
 @app.route('/main_registro')
 def main_registro():
@@ -61,19 +110,22 @@ def registro():
       #cerramos la conexión a la bd
       mysql.connection.close()
       print("S U C C E S S")
-      flash ('You have successfully registered!')
-      return redirect(url_for('main_entrar'))
+      flash ('Registrado con éxito!')
+      return redirect(url_for('login'))
   elif request.method == 'POST': #Si el formulario esta vacio
     flash ('Por favor introduce todos los datos')
   return render_template('main_registro.html')
 
 @app.route('/mis_materias')
 def mis_materias():
-  cur = mysql.connection.cursor()
-  cur.execute("SELECT * FROM materias")
-  data = cur.fetchall()
-  cur.close()
-  return render_template('mis_materias.html', materias = data)
+  if 'loggedin' in session:
+    usuario = session['id']
+    idUsuario = str(usuario)
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM materias where id=" + idUsuario)
+    data = cur.fetchall()
+    cur.close()
+    return render_template('mis_materias.html', materias = data, username=session['username'])
 
 @app.route('/delete_materia/<string:id>', methods=['POST', 'GET'])
 def deleteM(id):
@@ -90,7 +142,7 @@ def get_materia(id):
   data = cur.fetchall()
   cur.close()
   print(data[0])
-  return render_template('edit_materias.html', materia = data[0])
+  return render_template('edit_materias.html', materia = data[0], username=session['username'])
 
 @app.route('/update/<id>', methods = ['POST'])
 def actualizar_materia(id):
@@ -108,7 +160,7 @@ def main_tarea():
   cur.execute("SELECT * FROM materias")
   data = cur.fetchall()
   cur.close()
-  return render_template('main_tarea.html', materias = data)
+  return render_template('main_tarea.html', materias = data, username=session['username'])
 
 @app.route('/addtarea',methods=['POST'])
 def addtarea():
