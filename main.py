@@ -62,15 +62,6 @@ def main_materia():
 
 @app.route('/addmateria',methods=['POST'])
 def addmateria():
-<<<<<<< HEAD
-  if request.method == 'POST':
-    materia = request.form['materia']
-    cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO materias (materia) VALUES (%s)", [materia])
-    mysql.connection.commit()
-    flash('Materia agregada correctamente')
-    return redirect(url_for('main_materia'))  
-=======
   if 'loggedin' in session:
     if request.method == 'POST':
       materia = request.form['materia']
@@ -80,7 +71,6 @@ def addmateria():
       mysql.connection.commit()
       flash ('Materia registrada correctamente!')
       return redirect(url_for('main_materia'))  
->>>>>>> 6f5f2457bad20b673ffae2f916a4be521542aac6
 
 @app.route('/main_registro')
 def main_registro():
