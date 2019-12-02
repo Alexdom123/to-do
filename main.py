@@ -57,12 +57,14 @@ def main_materia():
 
 @app.route('/addmateria',methods=['POST'])
 def addmateria():
-  if request.method == 'POST':
-    materia = request.form['materia']
-    cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO materias (materia) VALUES (%s)", (materia,))
-    mysql.connection.commit()
-    return redirect(url_for('main_materia'))  
+  if 'loggedin' in session:
+    if request.method == 'POST':
+      materia = request.form['materia']
+      usuario = session['id']
+      cur = mysql.connection.cursor()
+      cur.execute("INSERT INTO materias (materia, id) VALUES (%s, %s)", (materia, usuario))
+      mysql.connection.commit()
+      return redirect(url_for('main_materia'))  
 
 @app.route('/main_registro')
 def main_registro():
