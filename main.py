@@ -23,7 +23,7 @@ def home():
   if 'loggedin' in session:
     # El usuario esta logueado y le mostramos el home
     return render_template('index.html', username=session['username'])
-  #El usuario no esta logueado, lo redireccionamos al inicio de sesion
+  #El usuario no esta logueado, redireccionamos al inicio de sesion
   return redirect(url_for('/'))
 
 @app.route('/', methods=['POST'])
