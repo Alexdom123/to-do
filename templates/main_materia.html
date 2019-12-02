@@ -50,6 +50,11 @@
 			<br>
 			<br>
 		<h1>Registra tus materias</h1>
+		{% with messages = get_flashed_messages() %}
+                    {% for message in messages %}
+                        <h3>{{ message }}</h3>
+                    {% endfor %}
+               {% endwith %}
 	</div>
 	<div class="row">
 		<div id="general" class="col-4">
@@ -58,7 +63,9 @@
 			<input type="text" class="form-control" name="materia" placeholder="Ingresa tu materia">
 			<br>
 			<button class="btn btn-info">Guardar</button>
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 			<a href="/main_tarea">Registrar tareas</a>
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 			<a href="mis_materias">Ir a mis materias</a>
 		</form>
 		</div>

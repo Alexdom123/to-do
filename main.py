@@ -53,7 +53,7 @@ def logout():
 
 @app.route('/main_materia')
 def main_materia():
-  return render_template('main_materia.html')
+  return render_template('main_materia.html', username=session['username'])
 
 @app.route('/addmateria',methods=['POST'])
 def addmateria():
@@ -64,6 +64,7 @@ def addmateria():
       cur = mysql.connection.cursor()
       cur.execute("INSERT INTO materias (materia, id) VALUES (%s, %s)", (materia, usuario))
       mysql.connection.commit()
+      flash ('Materia registrada correctamente!')
       return redirect(url_for('main_materia'))  
 
 @app.route('/main_registro')
@@ -102,11 +103,14 @@ def registro():
 
 @app.route('/mis_materias')
 def mis_materias():
-  cur = mysql.connection.cursor()
-  cur.execute("SELECT * FROM materias")
-  data = cur.fetchall()
-  cur.close()
-  return render_template('mis_materias.html', materias = data)
+  if 'loggedin' in session:
+    usuario = session['id']
+    idUsuario = str(usuario)
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM materias where id=" + idUsuario)
+    data = cur.fetchall()
+    cur.close()
+    return render_template('mis_materias.html', materias = data, username=session['username'])
 
 @app.route('/delete_materia/<string:id>', methods=['POST', 'GET'])
 def deleteM(id):
@@ -122,7 +126,7 @@ def get_materia(id):
   data = cur.fetchall()
   cur.close()
   print(data[0])
-  return render_template('edit_materias.html', materia = data[0])
+  return render_template('edit_materias.html', materia = data[0], username=session['username'])
 
 @app.route('/update/<id>', methods = ['POST'])
 def actualizar_materia(id):
@@ -139,7 +143,7 @@ def main_tarea():
   cur.execute("SELECT * FROM materias")
   data = cur.fetchall()
   cur.close()
-  return render_template('main_tarea.html', materias = data)
+  return render_template('main_tarea.html', materias = data, username=session['username'])
 
 @app.route('/addtarea',methods=['POST'])
 def addtarea():
