@@ -100,7 +100,7 @@ def registro():
       #cerramos la conexión a la bd
       mysql.connection.close()
       print("S U C C E S S")
-      flash ('You have successfully registered!')
+      flash ('Registrado con éxito!')
       return redirect(url_for('login'))
   elif request.method == 'POST': #Si el formulario esta vacio
     flash ('Por favor introduce todos los datos')
