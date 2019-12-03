@@ -59,10 +59,10 @@ footer{
     padding: 10px;
 }
 #card1{
-    background-color: "green";
-    color: "white";
+    background-color: green;
+    color: white;
 }
-#lista{
-    background-color: "green";
-    color: "white";
+#lista li{
+    background-color: green;
+    color: white;
 }
