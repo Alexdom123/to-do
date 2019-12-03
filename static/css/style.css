@@ -61,6 +61,7 @@ footer{
 #card1{
     background-color: chartreuse;
     color: white;
+    margin: 5px;
 }
 #lista li{
     background-color: chartreuse;
