@@ -30,41 +30,21 @@
 	}
 	var today = yyyy + '-' + mm + '-' + dd;
 	var caca = new Date(today);
-
-	/*if (fechaX <= fechaY)
-    {
-		alert('Tu chingadera si sirve')
-		x.style.background = "green"; 
-		x.style.color = "white"; 
-		l1.style.background = "green";
-		l1.style.color = "white";
-		l2.style.background = "green";
-		l2.style.color = "white";
-	}
-	else if (hoy > fechaY) {
-		alert('Tu chingadera no sirve')
+	if (hoy > fechaY) {
+		alert('Tienes tareas vencidas!')
 		x.style.background = "red"; 
 		x.style.color = "white"; 
 		l1.style.background = "red";
 		l1.style.color = "white";
 		l2.style.background = "red";
 		l2.style.color = "white";
-	}*/
+		texto1.style.color = "white";
+		texto1.style.background = "red";
+		texto2.style.color = "white";
+		texto2.style.background = "red";
+	}
 	console.log(today);
 	console.log(caca);
-
-	//var someDate = new Date(document.getElementById("fin").value);
-	//var contiene = document.getElementById("fin").text;
-	//var hoy = new Date(contiene);
-	//fechaX = new Date(fechaInicio);
-	//fechaFin = document.getElementById('fin').value;
-	//fechaFin = new Date();
-	//if( (new Date(someDate).getTime() > new Date(fechaFin).getTime()))
-    //{
-	//	x.style.color = "green";  
-    //}
-
-
 	}
 	</script>
 <body>
@@ -110,7 +90,7 @@
 	<div class="row">
 		
 				{% for tarea in tareas %}
-			
+				
 			<div id="card1" class="card" style="width: 18rem;">
 					<div class="card-header"><h5>Materia: {{ tarea.5 }}</h5></div>
 				<div class="card-body">
@@ -118,7 +98,9 @@
 				  <p class="card-text">Descripcion: {{ tarea.2 }}</p>
 				</div>
 				<ul id="lista" class="list-group list-group-flush">
+				  <li id="texto1" class="list-group-item">Fecha de creación:</li>
 				  <li id="inicio" class="list-group-item">{{ tarea.3 }}</li>
+				  <li id="texto2" class="list-group-item">Fecha de entrega:</li>
 				  <li id="fin" class="list-group-item">{{ tarea.4 }}</li>
 				</ul>
 				
@@ -127,7 +109,7 @@
 			  &nbsp&nbsp&nbsp&nbsp
 			  
 			  {% endfor %}
-
+			 
 		</div>
 		
 		<div id="aside" class="col-2">
@@ -135,13 +117,11 @@
     </div>
     </div>
         <div>
-			<footer id="pie" class="row">
-					<div class="col">
-						<ul id="listaPie">
-							<li>Alxdom</li> Mussgoking</li>
-					</ul>
+				<footer>
+						<div class="container">
+							<h5>Alxdom® & MussgoKing® 2019</h5>
 						</div>
-				</footer>
+					</footer>
 			</div>
 	
 
