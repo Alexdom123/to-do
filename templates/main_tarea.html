@@ -55,6 +55,11 @@
 			<br>
 			<br>
 		<h1>Organiza tus tareas sin dificultades</h1>
+		{% with messages = get_flashed_messages() %}
+                    {% for message in messages %}
+                        <h3>{{ message }}</h3>
+                    {% endfor %}
+               {% endwith %}
 	</div>
 	<div class="row">
 		<div id="general" class="col-8">

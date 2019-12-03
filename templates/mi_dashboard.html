@@ -7,6 +7,50 @@
 	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet"> 
 	<title>Mis materias</title>
 </head>
+<script>
+	window.onload = function cambiar_fondo(){
+	var x = document.getElementById("card1");
+	var l1 = document.getElementById("inicio");
+	var l2 = document.getElementById("fin");
+	var fechaInicio = document.getElementById("inicio").textContent;
+	var fechaFin = document.getElementById("fin").textContent;
+	var fechaX = new Date(fechaInicio);
+	var fechaY = new Date(fechaFin);
+	var hoy = new Date();
+	if (fechaX < fechaY)
+    {
+		x.style.background = "green"; 
+		x.style.color = "white"; 
+		l1.style.background = "green";
+		l1.style.color = "white";
+		l2.style.background = "green";
+		l2.style.color = "white";
+	}
+	if (hoy > fechaY) {
+		alert('Tu chingadera no sirve')
+		x.style.background = "red"; 
+		x.style.color = "white"; 
+		l1.style.background = "red";
+		l1.style.color = "white";
+		l2.style.background = "red";
+		l2.style.color = "white";
+	}
+	console.log(hoy);
+
+	//var someDate = new Date(document.getElementById("fin").value);
+	//var contiene = document.getElementById("fin").text;
+	//var hoy = new Date(contiene);
+	//fechaX = new Date(fechaInicio);
+	//fechaFin = document.getElementById('fin').value;
+	//fechaFin = new Date();
+	//if( (new Date(someDate).getTime() > new Date(fechaFin).getTime()))
+    //{
+	//	x.style.color = "green";  
+    //}
+
+
+	}
+	</script>
 <body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<a class="navbar-brand" href="#">TO-DO</a>
@@ -51,15 +95,15 @@
 		
 				{% for tarea in tareas %}
 			
-			<div class="card" style="width: 18rem;">
+			<div id="card1" class="card" style="width: 18rem;">
 					<div class="card-header"><h5>Materia: {{ tarea.5 }}</h5></div>
 				<div class="card-body">
 				  <h5 class="card-title">Titulo: {{ tarea.1 }}</h5>
 				  <p class="card-text">Descripcion: {{ tarea.2 }}</p>
 				</div>
 				<ul class="list-group list-group-flush">
-				  <li class="list-group-item">Creada: {{ tarea.3 }}</li>
-				  <li class="list-group-item">Entrega: {{ tarea.4 }}</li>
+				  <li id="inicio" class="list-group-item">{{ tarea.3 }}</li>
+				  <li id="fin" class="list-group-item">{{ tarea.4 }}</li>
 				</ul>
 				
 			  </div>

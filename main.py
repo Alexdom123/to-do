@@ -161,6 +161,7 @@ def addtarea():
     cur = mysql.connection.cursor()
     cur.execute("INSERT INTO tareas (titulo, descripcion, creada, entrega, idMateria) VALUES (%s, %s, %s, %s,%s)", (titulo, descripcion, creada, entrega, idmateria))
     mysql.connection.commit()
+    flash ('Tarea creada correctamente!')
     return redirect(url_for('main_tarea'))  
 
 @app.route('/mis_tareas')
