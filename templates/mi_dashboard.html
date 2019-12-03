@@ -15,10 +15,25 @@
 	var fechaInicio = document.getElementById("inicio").textContent;
 	var fechaFin = document.getElementById("fin").textContent;
 	var fechaX = new Date(fechaInicio);
-	var fechaY = new Date(fechaFin);
+	var fechaY = new Date(fechaFin)
+
 	var hoy = new Date();
-	if (fechaX < fechaY)
+	var dd = hoy.getDate();
+	var mm = hoy.getMonth() + 1;
+	var yyyy = hoy.getFullYear();
+
+	if (dd < 10){
+		dd = '0' + dd;
+	}
+	if (mm < 10){
+		mm = '0' + mm;
+	}
+	var today = yyyy + '-' + mm + '-' + dd;
+	var caca = new Date(today);
+
+	/*if (fechaX <= fechaY)
     {
+		alert('Tu chingadera si sirve')
 		x.style.background = "green"; 
 		x.style.color = "white"; 
 		l1.style.background = "green";
@@ -26,7 +41,7 @@
 		l2.style.background = "green";
 		l2.style.color = "white";
 	}
-	if (hoy > fechaY) {
+	else*/ if (hoy > fechaY) {
 		alert('Tu chingadera no sirve')
 		x.style.background = "red"; 
 		x.style.color = "white"; 
@@ -35,7 +50,8 @@
 		l2.style.background = "red";
 		l2.style.color = "white";
 	}
-	console.log(hoy);
+	console.log(today);
+	console.log(caca);
 
 	//var someDate = new Date(document.getElementById("fin").value);
 	//var contiene = document.getElementById("fin").text;
@@ -101,7 +117,7 @@
 				  <h5 class="card-title">Titulo: {{ tarea.1 }}</h5>
 				  <p class="card-text">Descripcion: {{ tarea.2 }}</p>
 				</div>
-				<ul class="list-group list-group-flush">
+				<ul id="lista" class="list-group list-group-flush">
 				  <li id="inicio" class="list-group-item">{{ tarea.3 }}</li>
 				  <li id="fin" class="list-group-item">{{ tarea.4 }}</li>
 				</ul>
