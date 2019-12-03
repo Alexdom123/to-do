@@ -148,8 +148,10 @@ def actualizar_materia(id):
 @app.route('/main_tarea')
 def main_tarea():
   if 'loggedin' in session:
+    usuario = session['id']
+    idUsuario = str(usuario)
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM materias")
+    cur.execute("SELECT * FROM materias where id=" + idUsuario)
     data = cur.fetchall()
     cur.close()
     return render_template('main_tarea.html', materias = data, username=session['username'])
@@ -163,8 +165,10 @@ def addtarea():
       creada = request.form['creada']
       entrega = request.form['entrega']
       idmateria = request.form['materia']
+      usuario = session['id']
+      idUsuario = str(usuario)
       cur = mysql.connection.cursor()
-      cur.execute("INSERT INTO tareas (titulo, descripcion, creada, entrega, idMateria) VALUES (%s, %s, %s, %s,%s)", (titulo, descripcion, creada, entrega, idmateria))
+      cur.execute("INSERT INTO tareas (titulo, descripcion, creada, entrega, idMateria ,id) VALUES (%s, %s, %s, %s, %s, %s)", (titulo, descripcion, creada, entrega, idmateria, idUsuario))
       mysql.connection.commit()
       flash ('Tarea creada correctamente!')
       return redirect(url_for('main_tarea'))  
@@ -172,8 +176,10 @@ def addtarea():
 @app.route('/mis_tareas')
 def mis_tareas():
   if 'loggedin' in session:
+    usuario = session['id']
+    idUsuario = str(usuario)
     cur = mysql.connection.cursor()
-    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria")
+    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, tareas.id, materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria AND tareas.id ="+idUsuario)
     data = cur.fetchall()
     cur.close()
     return render_template('mis_tareas.html', tareas = data, username=session['username'])
@@ -213,8 +219,10 @@ def actualizar_tarea(id):
 @app.route('/mi_dashboard')
 def mi_dashboard():
   if 'loggedin' in session:
+    usuario = session['id']
+    idUsuario = str(usuario)
     cur = mysql.connection.cursor()
-    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria")
+    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, tareas.id, materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria AND tareas.id="+ idUsuario)
     data = cur.fetchall()
     cur.close()
     return render_template('mi_dashboard.html', tareas = data, username=session['username'])
