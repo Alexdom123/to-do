@@ -62,15 +62,6 @@ def main_materia():
 
 @app.route('/addmateria',methods=['POST'])
 def addmateria():
-<<<<<<< HEAD
-  if request.method == 'POST':
-    materia = request.form['materia']
-    cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO materias (materia) VALUES (%s)", [materia])
-    mysql.connection.commit()
-    flash('Materia agregada correctamente')
-    return redirect(url_for('main_materia'))  
-=======
   if 'loggedin' in session:
     if request.method == 'POST':
       materia = request.form['materia']
@@ -80,7 +71,6 @@ def addmateria():
       mysql.connection.commit()
       flash ('Materia registrada correctamente!')
       return redirect(url_for('main_materia'))  
->>>>>>> 6f5f2457bad20b673ffae2f916a4be521542aac6
 
 @app.route('/main_registro')
 def main_registro():
@@ -132,7 +122,6 @@ def deleteM(id):
   cur = mysql.connection.cursor()
   cur.execute("DELETE FROM materias where idMateria = {0}".format(id))
   mysql.connection.commit()
-  
   return redirect(url_for('mis_materias'))
 
 @app.route('/edit_materia/<id>', methods = ['POST', 'GET'])
@@ -151,7 +140,6 @@ def actualizar_materia(id):
     cur = mysql.connection.cursor()
     cur.execute("UPDATE materias SET materia = %s WHERE idMateria = %s", (materia, id))
     mysql.connection.commit()
-    
   return redirect(url_for('mis_materias'))
 
 @app.route('/main_tarea')
@@ -182,5 +170,42 @@ def mis_tareas():
   data = cur.fetchall()
   cur.close()
   return render_template('mis_tareas.html', tareas = data)
+
+@app.route('/delete_tarea/<string:id>', methods=['POST', 'GET'])
+def deleteT(id):
+  cur = mysql.connection.cursor()
+  cur.execute("DELETE FROM tareas where idTarea = {0}".format(id))
+  mysql.connection.commit()
+  return redirect(url_for('mis_tareas'))
+
+@app.route('/edit_tarea/<id>', methods = ['POST', 'GET'])
+def get_tarea(id):
+  cur = mysql.connection.cursor()
+  cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria AND idTarea = %s", [id])                                                                
+  data = cur.fetchall()
+  cur.close()
+  print(data[0])
+  return render_template('edit_tareas.html', tarea = data[0], tareas = data)
+
+@app.route('/update_tarea/<id>', methods = ['POST'])
+def actualizar_tarea(id):
+  if request.method == 'POST':
+    titulo = request.form['titulo']
+    descripcion = request.form['descripcion']
+    creada = request.form['creada']
+    entrega = request.form['entrega']
+    idmateria = request.form['materia']
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE tareas SET titulo = %s, descripcion = %s, creada = %s, entrega = %s, idMateria = %s WHERE idTarea = %s", (titulo, descripcion, entrega, creada, idmateria, [id]))
+    mysql.connection.commit()
+  return redirect(url_for('mis_tareas'))
+
+@app.route('/mi_dashboard')
+def mi_dashboard():
+  cur = mysql.connection.cursor()
+  cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria")
+  data = cur.fetchall()
+  cur.close()
+  return render_template('mi_dashboard.html', tareas = data)
 
 app.run(debug= True, port= 8000)

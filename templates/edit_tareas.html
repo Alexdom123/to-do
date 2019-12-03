@@ -5,7 +5,11 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet"> 
-	<title>Agregar materias</title>
+
+	<link rel="stylesheet" type="text/css" href="/static/js/jquery.datetimepicker.css">
+	<script src="/static/js/jquery.js"></script>
+	<script src="/static/build/jquery.datetimepicker.full.min.js"></script>
+	<title>Nueva Lista</title>
 </head>
 <body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -13,21 +17,17 @@
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				  <span class="navbar-toggler-icon"></span>
 				</button>
-				
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				  <ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
 					  <a class="nav-link" href="home">Inicio <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
-					  <a class="nav-link" href="#">Mi Dashboard</a>
+					  <a class="nav-link" href="#">Historial</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="mis_materias">Mis materias</a>
-					  </li>
-					  <li class="nav-item">
-							<a class="nav-link" href="#">Mis tareas</a>
-						  </li>
+					  <a class="nav-link" href="#">Mi Dashboard</a>
+					</li>
 				  </ul>
 				  <div class="mx-auto order-0">
 						<a>Bienvenido, {{ username }}!</a>
@@ -40,6 +40,7 @@
 				   </ul>
 				</div>
 		</nav>
+		
 	<div class="container-fluid">
 	<div class="jumbotron">
 			<br>
@@ -53,26 +54,38 @@
 			<br>
 			<br>
 			<br>
-		<h1>Registra tus materias</h1>
-		{% with messages = get_flashed_messages() %}
-                    {% for message in messages %}
-                        <h3>{{ message }}</h3>
-                    {% endfor %}
-               {% endwith %}
+		<h1>Organiza tus tareas sin dificultades</h1>
 	</div>
 	<div class="row">
 		<div id="general" class="col-8">
-			<form action="{{url_for('addmateria')}}" method="POST">
-			<input type="text" class="form-control" name="materia" placeholder="Ingresa tu materia">
+			<form action="/update_tarea/{{tarea.0}}" method="POST">
+			<h3>Paso 2. Agrega tus tareas a tu lista</h3>
 			<br>
-			<button class="btn btn-info">Guardar</button>
-			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-			<a href="/main_tarea">Registrar tareas</a>
-			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-			<a href="mis_materias">Ir a mis materias</a>
+			<input type="text" class="form-control" name="titulo" placeholder="Titulo" value="{{tarea.1}}">
+			<br>
+			<input type="text" class="form-control" name="descripcion" placeholder="Descripcion" value="{{tarea.2}}">
+			<br>
+			<!--_______________Fechas-->
+			Selecciona la fecha de inicio
+			<br>
+			<input name="creada" type="date" placeholder="Selecciona la fecha de inicio" value="{{tarea.3}}">
+			<br>	
+			<br>
+			Selecciona la fecha límite
+			<br>
+			<input name="entrega" type="date" placeholder="Selecciona la fecha límite" value="{{tarea.4}}">
+			<br>
+		    <br>
+				<select name="materia" id="combo_materia">
+                        <option value="{{ tarea.6 }}"> {{ tarea.5 }}</option>
+                        <br>
+				</select>
+				<br>
+				<br>
+		<button class="btn btn-info">Guardar</button>
 		</form>
 		</div>
-		<div class="col-8">
+		<div id="aside" class="col-4">
 		</div>
 	</div>
 	<footer>
@@ -80,6 +93,6 @@
 				<h5>Alxdom® & MussgoKing® 2019</h5>
 			</div>
 		</footer>
-	</div>
+			</div>
 </body>
 </html>
