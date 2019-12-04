@@ -180,8 +180,7 @@ def mis_tareas():
     usuario = session['id']
     idUsuario = str(usuario)
     cur = mysql.connection.cursor()
-    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, tareas.id, 
-    materias.materia, materias.idMateria FROM tareas INNER JOIN materias ON (tareas.idMateria = materias.idMateria) WHERE tareas.id="+idUsuario)
+    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, tareas.id, materias.materia, materias.idMateria FROM tareas INNER JOIN materias ON (tareas.idMateria = materias.idMateria) WHERE tareas.id="+idUsuario)
     data = cur.fetchall()
     cur.close()
     return render_template('mis_tareas.html', tareas = data, username=session['username'])
@@ -199,8 +198,7 @@ def deleteT(id):
 def get_tarea(id):
   if 'loggedin' in session:
     cur = mysql.connection.cursor()
-    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.entrega, materias.materia, materias.idMateria 
-    FROM tareas INNER JOIN materias ON tareas.idMateria = materias.idMateria WHERE idTarea = %s", [id])                                                                
+    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.entrega, materias.materia, materias.idMateria FROM tareas INNER JOIN materias ON tareas.idMateria = materias.idMateria WHERE idTarea = %s", [id])                                                                
     data = cur.fetchall()
     cur.close()
     return render_template('edit_tareas.html', tarea = data[0], tareas = data, username=session['username'])
@@ -214,8 +212,7 @@ def actualizar_tarea(id):
       entrega = request.form['entrega']
       idmateria = request.form['materia']
       cur = mysql.connection.cursor()
-      cur.execute("UPDATE tareas SET titulo = %s, descripcion = %s, entrega = %s, idMateria = %s WHERE idTarea = %s"
-      , (titulo, descripcion, entrega, idmateria, [id]))
+      cur.execute("UPDATE tareas SET titulo = %s, descripcion = %s, entrega = %s, idMateria = %s WHERE idTarea = %s", (titulo, descripcion, entrega, idmateria, [id]))
       mysql.connection.commit()
       flash('Materia Actualizada correctamente!')
     return redirect(url_for('mis_tareas'))
@@ -226,8 +223,7 @@ def mi_dashboard():
     usuario = session['id']
     idUsuario = str(usuario)
     cur = mysql.connection.cursor()
-    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, tareas.id,
-     materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria 
+    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, tareas.id,materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria 
      AND tareas.id="+ idUsuario)
     data = cur.fetchall()
     cur.close()
