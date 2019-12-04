@@ -223,8 +223,7 @@ def mi_dashboard():
     usuario = session['id']
     idUsuario = str(usuario)
     cur = mysql.connection.cursor()
-    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, tareas.id,materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria 
-     AND tareas.id="+ idUsuario)
+    cur.execute("SELECT tareas.idTarea, tareas.titulo, tareas.descripcion, tareas.creada, tareas.entrega, tareas.id,materias.materia, materias.idMateria FROM tareas INNER JOIN materias WHERE tareas.idMateria = materias.idMateria AND tareas.id="+ idUsuario)
     data = cur.fetchall()
     cur.close()
     return render_template('mi_dashboard.html', tareas = data, username=session['username'])
