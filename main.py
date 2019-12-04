@@ -1,7 +1,6 @@
 from flask import Flask,render_template, request, make_response, session, url_for, redirect, flash
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
-import form
 import bcrypt #librería para encriptacion de datos
 import re #alchile no sé pa k es
 
@@ -123,6 +122,7 @@ def deleteM(id):
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM materias where idMateria = {0}".format(id))
     mysql.connection.commit()
+    flash ('Materia Eliminada correctamente!')
     return redirect(url_for('mis_materias'))
 
 @app.route('/edit_materia/<id>', methods = ['POST', 'GET'])
@@ -143,6 +143,7 @@ def actualizar_materia(id):
       cur = mysql.connection.cursor()
       cur.execute("UPDATE materias SET materia = %s WHERE idMateria = %s", (materia, id))
       mysql.connection.commit()
+      flash('Materia Actualizada correctamente!')
     return redirect(url_for('mis_materias'))
 
 @app.route('/main_tarea')
@@ -190,6 +191,7 @@ def deleteT(id):
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM tareas where idTarea = {0}".format(id))
     mysql.connection.commit()
+    flash('Tarea Eliminada correctamente!')
     return redirect(url_for('mis_tareas'))
 
 @app.route('/edit_tarea/<id>', methods = ['POST', 'GET'])
@@ -214,6 +216,7 @@ def actualizar_tarea(id):
       cur = mysql.connection.cursor()
       cur.execute("UPDATE tareas SET titulo = %s, descripcion = %s, creada = %s, entrega = %s, idMateria = %s WHERE idTarea = %s", (titulo, descripcion, entrega, creada, idmateria, [id]))
       mysql.connection.commit()
+      flash('Materia Actulizada correctamente!')
     return redirect(url_for('mis_tareas'))
 
 @app.route('/mi_dashboard')
