@@ -8,8 +8,8 @@
 	<title>Mis materias</title>
 </head>
 <body>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand" href="home">TO-DO</a>
+		<nav class="navbar sticky-top navbar navbar-expand-lg navbar-light bg-light">
+				<a class="navbar-brand" href="/home">TO-DO</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				  <span class="navbar-toggler-icon"></span>
 				</button>
@@ -17,18 +17,27 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				  <ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-					  <a class="nav-link" href="home">Inicio <span class="sr-only">(current)</span></a>
+					  <a class="nav-link" href="/home">Inicio <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
-					  <a class="nav-link" href="mi_dashboard">Mi Dashboard</a>
+					  <a class="nav-link" href="/mi_dashboard">Mi Dashboard</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="mis_materias">Mis materias</a>
+						<a class="nav-link" href="/mis_materias">Mis materias</a>
 					  </li>
 					  <li class="nav-item">
-							<a class="nav-link" href="mis_tareas">Mis tareas</a>
+							<a class="nav-link" href="/mis_tareas">Mis tareas</a>
 						  </li>
 				  </ul>
+				  <div class="mx-auto order-0">
+						<a>Bienvenido, {{ username }}!</a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+					</div>
+				  <ul class="navbar-nav ml-auto">
+								<a class="nav-link" href="/logout">Cerrar Sesión</a>
+				   </ul>
 				</div>
 		</nav>
 	<div class="container-fluid">
@@ -45,6 +54,11 @@
 			<br>
 			<br>
 		<h1>Edita y elimina tus materias</h1>
+		{% with messages = get_flashed_messages() %}
+                    {% for message in messages %}
+                        <h3>{{ message }}</h3>
+                    {% endfor %}
+               {% endwith %}
 	</div>
 	<div id="general" class="col-12">
 	<div class="row">
@@ -69,7 +83,7 @@
                             <td><p>{{ tarea.2 }}</p></td>
                             <td><p>{{ tarea.3 }}</p></td>
                             <td><p>{{ tarea.4 }}</p></td>
-                            <td><p>{{ tarea.5 }}</p></td>
+                            <td><p>{{ tarea.6 }}</p></td>
                             
                             
                             <td>
@@ -94,7 +108,7 @@
 						<div class="container">
 							<h5>Alxdom® & MussgoKing® 2019</h5>
 						</div>
-					</footer>
+					</footer> 
 			</div>
 	
 
